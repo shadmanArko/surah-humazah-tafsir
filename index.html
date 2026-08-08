@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>সূরা আল-হুমাযাহ — তাফসীর উপস্থাপনা</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Baloo+Da+2:wght@500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B0D12;
+  --ink-2:#12151D;
+  --ink-3:#1A1E28;
+  --gold:#C9A227;
+  --gold-lit:#EBD08A;
+  --gold-dim:rgba(201,162,39,.35);
+  --ember:#D9430F;
+  --ember-lit:#FF8A52;
+  --ember-dim:rgba(217,67,15,.35);
+  --bone:#EDE6D6;
+  --muted:#8B8778;
+  --accent:var(--gold);
+  --accent-lit:var(--gold-lit);
+  --accent-dim:var(--gold-dim);
+  --f-display:'Baloo Da 2',system-ui,sans-serif;
+  --f-body:'Tiro Bangla','Noto Serif Bengali',serif;
+  --f-ui:'Hind Siliguri',system-ui,sans-serif;
+  --f-ar:'Amiri','Scheherazade New','Traditional Arabic',serif;
+  --pad:clamp(20px,4.5vw,72px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--ink)}
+body{
+  font-family:var(--f-body);
+  color:var(--bone);
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+}
+
+/* ---------- ambient ground: stacked rules (the "hoard" motif) ---------- */
+#ground{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  transition:opacity .9s ease}
+#ground .rule{position:absolute;top:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,transparent,var(--accent-dim) 35%,var(--accent-dim) 65%,transparent);
+  transform-origin:bottom center;transition:transform .9s cubic-bezier(.2,.8,.2,1),background .9s ease}
+#glow{position:fixed;left:50%;top:55%;width:120vmax;height:120vmax;transform:translate(-50%,-50%);
+  z-index:0;pointer-events:none;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,162,39,.10) 0%,transparent 55%);
+  transition:background .9s ease}
+body.phase-ember #glow{background:radial-gradient(circle,rgba(217,67,15,.13) 0%,transparent 55%)}
+
+/* ---------- top rail ---------- */
+#rail{position:fixed;top:0;left:0;right:0;z-index:40;
+  display:flex;align-items:center;gap:16px;
+  padding:14px var(--pad) 0;font-family:var(--f-ui);font-size:12.5px;
+  letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+#rail .sec{color:var(--accent-lit);letter-spacing:.18em;transition:color .5s}
+#bar{position:fixed;top:0;left:0;height:2px;width:0;z-index:41;
+  background:linear-gradient(90deg,var(--accent-dim),var(--accent-lit));
+  transition:width .5s cubic-bezier(.2,.8,.2,1),background .9s}
+#count{margin-left:auto;font-variant-numeric:tabular-nums}
+
+/* ---------- deck ---------- */
+#deck{position:relative;z-index:10;height:100%;width:100%}
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:76px var(--pad) 88px;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translateY(22px);
+  transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1),visibility .5s;
+  overflow-y:auto;overscroll-behavior:contain;
+}
+.slide.on{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+.wrap{width:100%;max-width:1080px;margin:0 auto}
+
+/* ---------- type ---------- */
+.eyebrow{font-family:var(--f-ui);font-size:clamp(11px,1.2vw,13px);letter-spacing:.24em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:14px;
+  display:flex;align-items:center;gap:12px}
+.eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--accent-dim),transparent)}
+h1{font-family:var(--f-display);font-weight:800;line-height:1.12;
+  font-size:clamp(38px,7.6vw,86px);letter-spacing:-.01em}
+h2{font-family:var(--f-display);font-weight:700;line-height:1.22;
+  font-size:clamp(27px,4.4vw,50px);margin-bottom:20px}
+h3{font-family:var(--f-display);font-weight:600;font-size:clamp(18px,2.2vw,25px);
+  color:var(--accent-lit);margin-bottom:10px}
+p{font-size:clamp(16px,1.75vw,21px);line-height:1.85;color:#DCD5C6;max-width:74ch}
+p+p{margin-top:14px}
+.lead{font-size:clamp(18px,2.1vw,25px);line-height:1.8;color:var(--bone)}
+.dim{color:var(--muted)}
+strong{color:var(--accent-lit);font-weight:inherit;font-family:var(--f-display);font-weight:600}
+
+/* arabic */
+.ar{font-family:var(--f-ar);direction:rtl;color:var(--bone);line-height:1.95}
+.ar-hero{font-size:clamp(34px,6.4vw,74px);text-align:right;
+  text-shadow:0 0 60px rgba(235,208,138,.16)}
+body.phase-ember .ar-hero{text-shadow:0 0 60px rgba(255,138,82,.18)}
+
+/* ---------- cover ---------- */
+.cover{align-items:center;text-align:center}
+.cover .wrap{display:flex;flex-direction:column;align-items:center;gap:6px}
+.cover .ar-title{font-family:var(--f-ar);direction:rtl;font-size:clamp(46px,10vw,120px);
+  color:var(--gold-lit);line-height:1.3;letter-spacing:.02em;
+  text-shadow:0 0 70px rgba(235,208,138,.28)}
+.cover h1{margin-top:4px}
+.cover .sub{font-family:var(--f-ui);letter-spacing:.3em;text-transform:uppercase;
+  font-size:clamp(11px,1.3vw,14px);color:var(--muted);margin-top:22px}
+.cover .tag{font-family:var(--f-body);font-style:italic;color:var(--accent-lit);
+  font-size:clamp(17px,2.1vw,24px);margin-top:26px;opacity:.95}
+.hr{width:64px;height:1px;background:var(--gold);margin:26px auto;opacity:.6}
+
+/* ---------- grids & cards ---------- */
+.grid{display:grid;gap:14px;margin-top:22px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.card{background:linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  border:1px solid rgba(201,162,39,.20);border-radius:3px;padding:20px 22px;
+  transition:border-color .3s,transform .3s,background .3s}
+body.phase-ember .card{border-color:rgba(217,67,15,.22)}
+.card .k{font-family:var(--f-ui);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px}
+.card .v{font-family:var(--f-display);font-weight:600;font-size:clamp(18px,2.1vw,23px);color:var(--bone)}
+.card p{font-size:clamp(15px,1.5vw,17.5px);line-height:1.75}
+
+/* clickable cards */
+.tap{cursor:pointer;position:relative}
+.tap:hover,.tap:focus-visible{border-color:var(--accent);transform:translateY(-3px);
+  background:linear-gradient(160deg,rgba(201,162,39,.10),rgba(255,255,255,.02))}
+.tap:focus-visible{outline:2px solid var(--accent-lit);outline-offset:3px}
+.tap .more{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.2,.8,.2,1),
+  margin .45s,opacity .35s;opacity:0}
+.tap.open .more{max-height:900px;margin-top:14px;opacity:1}
+.tap .cue{position:absolute;top:16px;left:18px;font-family:var(--f-ui);font-size:11px;
+  letter-spacing:.14em;color:var(--accent);opacity:.65;transition:opacity .3s}
+.tap.open .cue{opacity:0}
+
+/* ---------- ayah slide ---------- */
+.ayah-head{display:flex;align-items:flex-end;gap:20px;justify-content:space-between;flex-wrap:wrap}
+.ayah-num{font-family:var(--f-display);font-weight:800;
+  font-size:clamp(54px,10vw,132px);line-height:.8;color:transparent;
+  -webkit-text-stroke:1.5px var(--accent-dim);opacity:.85;flex:none}
+.trans{font-family:var(--f-body);font-size:clamp(18px,2.3vw,27px);line-height:1.75;
+  color:var(--accent-lit);margin-top:18px;padding-right:2px;max-width:60ch;margin-left:auto;text-align:right}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.chip{font-family:var(--f-ar);direction:rtl;font-size:clamp(20px,2.4vw,28px);
+  background:rgba(201,162,39,.09);border:1px solid rgba(201,162,39,.28);
+  border-radius:2px;padding:6px 16px 9px;cursor:pointer;color:var(--bone);
+  transition:all .25s;line-height:1.5}
+body.phase-ember .chip{background:rgba(217,67,15,.09);border-color:rgba(217,67,15,.30)}
+.chip:hover{background:var(--accent);color:var(--ink);border-color:var(--accent)}
+.chip.sel{background:var(--accent);color:var(--ink);border-color:var(--accent-lit)}
+.chip:focus-visible{outline:2px solid var(--accent-lit);outline-offset:3px}
+.gloss{margin-top:16px;min-height:96px;border-left:2px solid var(--accent);
+  padding:4px 0 4px 20px;transition:opacity .3s}
+.gloss .gt{font-family:var(--f-ui);font-size:13px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:7px}
+.gloss p{font-size:clamp(16px,1.7vw,19.5px);color:#DCD5C6}
+.gloss.empty p{color:var(--muted);font-style:italic}
+.point{margin-top:26px;background:linear-gradient(120deg,rgba(201,162,39,.10),transparent 70%);
+  border:1px solid rgba(201,162,39,.22);border-left:3px solid var(--accent);
+  padding:20px 24px;border-radius:2px}
+body.phase-ember .point{background:linear-gradient(120deg,rgba(217,67,15,.11),transparent 70%);
+  border-color:rgba(217,67,15,.26)}
+.point .pl{font-family:var(--f-ui);font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:9px}
+.point p{font-size:clamp(16px,1.7vw,20px);max-width:none}
+
+/* ---------- hinge (signature moment) ---------- */
+.hinge{align-items:center;justify-content:center;text-align:center}
+.hinge .kalla{font-family:var(--f-ar);direction:rtl;
+  font-size:clamp(84px,20vw,240px);line-height:1;color:var(--ember-lit);
+  text-shadow:0 0 90px rgba(255,138,82,.45);letter-spacing:.02em}
+.slide.on .kalla{animation:strike .9s cubic-bezier(.2,.9,.2,1) both}
+@keyframes strike{
+  0%{transform:scale(1.5);opacity:0;filter:blur(14px)}
+  55%{transform:scale(.97);opacity:1;filter:blur(0)}
+  100%{transform:scale(1);opacity:1}
+}
+.hinge .say{font-family:var(--f-display);font-weight:700;
+  font-size:clamp(24px,4vw,44px);margin-top:14px;color:var(--bone)}
+.hinge .note{margin-top:22px;color:var(--muted);max-width:56ch;margin-inline:auto;text-align:center}
+.split{display:flex;align-items:center;justify-content:center;gap:clamp(14px,4vw,52px);
+  margin-top:44px;flex-wrap:wrap;font-family:var(--f-ui);font-size:clamp(13px,1.5vw,16px);
+  letter-spacing:.1em;color:var(--muted)}
+.split b{display:block;font-family:var(--f-display);font-size:clamp(20px,3vw,32px);
+  color:var(--bone);letter-spacing:0;font-weight:700}
+.split .a b{color:var(--gold-lit)} .split .b b{color:var(--ember-lit)}
+.split .x{font-size:clamp(20px,3vw,30px);color:var(--ember)}
+
+/* ---------- surah list ---------- */
+.verse{display:grid;grid-template-columns:auto 1fr;gap:0 20px;align-items:baseline;
+  padding:13px 4px;border-bottom:1px solid rgba(201,162,39,.13);cursor:pointer;
+  transition:background .25s,padding .25s}
+.verse:hover{background:rgba(201,162,39,.06);padding-left:12px}
+.verse:focus-visible,.check:focus-visible{outline:2px solid var(--accent-lit);outline-offset:3px}
+.verse .n{font-family:var(--f-ui);font-size:13px;color:var(--accent);
+  width:26px;text-align:center;opacity:.8}
+.verse .a{font-family:var(--f-ar);direction:rtl;font-size:clamp(21px,2.7vw,32px);text-align:right}
+.verse .b{grid-column:2;font-size:clamp(14.5px,1.5vw,17px);color:var(--muted);
+  margin-top:4px;text-align:right;max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .4s,opacity .3s,margin .4s}
+.verse.open .b{max-height:120px;opacity:1;margin-top:7px}
+
+/* ---------- counter (عدده) ---------- */
+.coins{display:flex;align-items:flex-end;gap:5px;height:110px;margin-top:26px}
+.coin{width:12px;background:linear-gradient(180deg,var(--gold-lit),var(--gold));
+  border-radius:1px;height:0;transition:height .7s cubic-bezier(.2,.8,.2,1);opacity:.85}
+.tick{font-family:var(--f-ui);font-variant-numeric:tabular-nums;
+  font-size:clamp(30px,5.5vw,58px);color:var(--gold-lit);margin-top:16px;letter-spacing:.04em}
+.tick span{font-size:.42em;color:var(--muted);letter-spacing:.2em;margin-right:12px;
+  text-transform:uppercase;font-family:var(--f-ui)}
+.recount{font-family:var(--f-ui);font-size:clamp(14px,1.6vw,17px);color:var(--gold-lit);
+  letter-spacing:.04em;margin-top:8px;min-height:1.5em;opacity:.9}
+.fineprint{font-family:var(--f-ui);font-size:clamp(12.5px,1.3vw,14px);color:var(--muted);
+  margin-top:12px;line-height:1.7;max-width:62ch;border-left:1px solid var(--gold-dim);padding-left:14px}
+
+/* ---------- heart + fire (আফইদাহ) ---------- */
+.figure{display:flex;justify-content:center;margin-top:20px}
+.figure svg{width:min(420px,80vw);height:auto}
+.flame{transform-origin:center bottom}
+.slide.on .flame{animation:lick 2.6s ease-in-out infinite}
+.slide.on .flame:nth-child(2){animation-delay:-.7s}
+.slide.on .flame:nth-child(3){animation-delay:-1.4s}
+@keyframes lick{0%,100%{transform:scaleY(1) translateY(0)}50%{transform:scaleY(1.13) translateY(-7px)}}
+.heartpath{stroke:var(--ember-lit);fill:rgba(217,67,15,.14)}
+.slide.on .heartpath{animation:beat 2s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.06)}24%{transform:scale(1)}}
+
+/* ---------- pillars (عمد ممددة) ---------- */
+.pillars{display:flex;justify-content:center;gap:9px;height:132px;align-items:flex-start;margin-top:26px}
+.pillar{width:16px;background:linear-gradient(180deg,var(--ember),rgba(217,67,15,.15));
+  height:0;transition:height .8s cubic-bezier(.3,.9,.3,1);border-radius:0 0 2px 2px}
+
+/* ---------- checklist ---------- */
+.checks{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+.check{display:flex;align-items:flex-start;gap:14px;cursor:pointer;padding:14px 18px;
+  border:1px solid rgba(201,162,39,.18);border-radius:2px;transition:all .25s;
+  background:rgba(255,255,255,.018)}
+.check:hover{border-color:var(--accent);background:rgba(201,162,39,.07)}
+.check .box{flex:none;width:20px;height:20px;border:1.5px solid var(--accent);
+  border-radius:2px;margin-top:5px;display:grid;place-items:center;
+  font-size:13px;color:var(--ink);transition:all .25s}
+.check.done .box{background:var(--accent);}
+.check.done .box::after{content:"✓";font-family:var(--f-ui);font-weight:600}
+.check span{font-size:clamp(15.5px,1.7vw,19px);line-height:1.6;transition:color .25s}
+.check.done span{color:var(--muted)}
+.tally{margin-top:20px;font-family:var(--f-ui);letter-spacing:.06em;color:var(--accent-lit);
+  font-size:clamp(15px,1.7vw,18px);min-height:1.6em}
+
+/* ---------- controls ---------- */
+#nav{position:fixed;bottom:0;left:0;right:0;z-index:40;
+  display:flex;align-items:center;gap:10px;padding:0 var(--pad) 18px;
+  font-family:var(--f-ui)}
+.btn{background:transparent;border:1px solid rgba(201,162,39,.28);color:var(--bone);
+  font-family:var(--f-ui);font-size:13px;letter-spacing:.1em;padding:8px 15px;
+  border-radius:2px;cursor:pointer;transition:all .22s}
+.btn:hover{border-color:var(--accent);background:rgba(201,162,39,.13);color:var(--accent-lit)}
+.btn:focus-visible{outline:2px solid var(--accent-lit);outline-offset:3px}
+#dots{display:flex;gap:6px;margin:0 auto;flex-wrap:wrap;justify-content:center;max-width:60%}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(237,230,214,.22);
+  cursor:pointer;transition:all .3s;border:none;padding:0}
+.dot:hover{background:var(--accent)}
+.dot.on{background:var(--accent-lit);width:22px;border-radius:3px}
+
+/* ---------- overview ---------- */
+#ov{position:fixed;inset:0;z-index:60;background:rgba(11,13,18,.97);
+  padding:var(--pad);overflow-y:auto;display:none}
+#ov.on{display:block}
+#ov h3{margin-bottom:20px}
+#ovg{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.ovc{background:rgba(255,255,255,.035);border:1px solid rgba(201,162,39,.20);
+  padding:16px;border-radius:2px;cursor:pointer;text-align:right;transition:all .22s;color:var(--bone)}
+.ovc:hover{border-color:var(--accent);background:rgba(201,162,39,.12)}
+.ovc .i{font-family:var(--f-ui);font-size:11px;color:var(--accent);letter-spacing:.16em;
+  display:block;margin-bottom:7px}
+.ovc .t{font-family:var(--f-display);font-weight:600;font-size:16px;line-height:1.4}
+
+@media(max-width:640px){
+  .slide{padding:70px 20px 92px}
+  .trans,.ayah-head{text-align:right}
+  #dots{max-width:44%}
+  .ayah-num{font-size:56px}
+  .btn{padding:7px 11px;font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<div id="glow"></div>
+<div id="ground"></div>
+
+<div id="bar"></div>
+<div id="rail">
+  <span class="sec" id="railsec">শুরু</span>
+  <span id="count">০১ / ২৩</span>
+</div>
+
+<main id="deck">
+
+  <!-- 1 · COVER -->
+  <section class="slide cover" data-sec="শুরু" data-title="সূচনা">
+    <div class="wrap">
+      <div class="ar-title">سُورَةُ الهُمَزَة</div>
+      <h1>সূরা আল-হুমাযাহ</h1>
+      <div class="hr"></div>
+      <div class="sub">সূরা ১০৪ &nbsp;·&nbsp; ৯ আয়াত &nbsp;·&nbsp; মাক্কী &nbsp;·&nbsp; ৩০ পারা</div>
+      <div class="tag">“যে জিহ্বা দিয়ে মানুষের সম্মান ভাঙে,<br>আগুন একদিন তাকেই ভাঙবে।”</div>
+    </div>
+  </section>
+
+  <!-- 2 · এক নজরে -->
+  <section class="slide" data-sec="পরিচিতি" data-title="এক নজরে">
+    <div class="wrap">
+      <div class="eyebrow">এক নজরে</div>
+      <h2>সূরাটি কোথায় দাঁড়িয়ে আছে</h2>
+      <div class="grid g3">
+        <div class="card"><div class="k">ক্রম</div><div class="v">১০৪ নম্বর সূরা</div></div>
+        <div class="card"><div class="k">আয়াত সংখ্যা</div><div class="v">৯টি</div></div>
+        <div class="card"><div class="k">অবতীর্ণ</div><div class="v">মক্কায়</div></div>
+        <div class="card"><div class="k">পারা</div><div class="v">৩০ (আম্মা)</div></div>
+        <div class="card"><div class="k">আগের সূরা</div><div class="v">আল-আসর</div></div>
+        <div class="card"><div class="k">পরের সূরা</div><div class="v">আল-ফীল</div></div>
+      </div>
+      <p style="margin-top:24px">দুটি বাক্যে পুরো সূরা — <strong>একজন মানুষ, যার জিহ্বা মানুষকে ছোট করে আর যার সম্পদ তাকে অমরত্বের বিভ্রম দেয়।</strong> আল্লাহ প্রথমে তার অপরাধ আঁকেন, তারপর দেখান সেই অপরাধ শেষ পর্যন্ত তাকে কোথায় নিয়ে যায়।</p>
+    </div>
+  </section>
+
+  <!-- 3 · নামকরণ -->
+  <section class="slide" data-sec="পরিচিতি" data-title="নামকরণের রহস্য">
+    <div class="wrap">
+      <div class="eyebrow">নামকরণ</div>
+      <h2>“হুমাযাহ” শব্দটিই একটি পুরো অভিযোগপত্র</h2>
+      <p>আরবি ব্যাকরণে <strong>فُعَلَة</strong> (ফু‘আলাহ) ওজনটি এমন মানুষ বোঝায়, যে কাজটি একবার করে না — বারবার করে, অভ্যাস বানিয়ে ফেলে, শেষে সেটাই তার পরিচয় হয়ে যায়। যেমন <span class="ar">ضُحَكَة</span> মানে “যে হেসেই চলে”।</p>
+      <div class="grid g2">
+        <div class="card">
+          <div class="k">যা বলা হয়নি</div>
+          <div class="v" style="color:var(--muted)">“যে একবার নিন্দা করেছে”</div>
+        </div>
+        <div class="card" style="border-color:var(--gold)">
+          <div class="k">যা বলা হয়েছে</div>
+          <div class="v">“নিন্দা করাই যার পেশা”</div>
+        </div>
+      </div>
+      <p style="margin-top:22px">সূরার প্রথম শব্দ থেকেই নাম — কিন্তু নামটি নিছক পরিচয় নয়। এটি একটি চরিত্রের ছবি: এমন একজন, যার মুখ খুললেই কারও না কারও সম্মান ঝরে পড়ে।</p>
+    </div>
+  </section>
+
+  <!-- 4 · প্রেক্ষাপট -->
+  <section class="slide" data-sec="প্রেক্ষাপট" data-title="মক্কার সেই দিনগুলো">
+    <div class="wrap">
+      <div class="eyebrow">প্রেক্ষাপট · কেন এই সূরা</div>
+      <h2>মক্কার অভিজাতদের হাতে ছিল দুটি অস্ত্র</h2>
+      <p class="lead">ইসলামের সূচনালগ্ন। রাসূলুল্লাহ ﷺ যে বার্তা এনেছেন, কুরাইশ নেতারা তার <em>যুক্তি</em> খণ্ডন করতে পারছিল না। তাই তারা যুক্তি ছেড়ে মানুষটির দিকে হাত বাড়াল।</p>
+      <div class="grid g2">
+        <div class="card">
+          <div class="k">অস্ত্র এক</div>
+          <div class="v">জিহ্বা</div>
+          <p style="margin-top:9px" class="dim">বিদ্রূপ, ভেংচি, নাম বিকৃতি, চোখের ইশারা, নকল করে হাসি — রাসূল ﷺ ও দুর্বল সাহাবীদের (বিলাল, আম্মার, খাব্বাব, সুহাইব রা.) উপর।</p>
+        </div>
+        <div class="card">
+          <div class="k">অস্ত্র দুই</div>
+          <div class="v">সম্পদ</div>
+          <p style="margin-top:9px" class="dim">“আমরা ধনী, তোমরা গরিব — সত্য তাহলে আমাদের পক্ষেই” — এই যুক্তিহীন গর্বই ছিল তাদের ভিত্তি।</p>
+        </div>
+      </div>
+      <p style="margin-top:24px">সূরা হুমাযাহ ঠিক এই দুটি অস্ত্রকেই টেনে ধরে — <strong>প্রথম আয়াতে জিহ্বা, দ্বিতীয় আয়াতে সম্পদ।</strong> এলোমেলো কোনো ক্রম নয়; এটাই ছিল সেদিনের বাস্তবতা।</p>
+    </div>
+  </section>
+
+  <!-- 5 · শানে নুযূল -->
+  <section class="slide" data-sec="প্রেক্ষাপট" data-title="শানে নুযূল">
+    <div class="wrap">
+      <div class="eyebrow">শানে নুযূল · কার কথা বলা হয়েছে</div>
+      <h2>মুফাসসিরগণ যেসব নাম উল্লেখ করেছেন</h2>
+      <p class="dim" style="font-size:16px">কার্ডে চাপ দিন — প্রতিটি খুলে যাবে</p>
+      <div class="grid g2" style="margin-top:18px">
+        <div class="card tap" tabindex="0">
+          <div class="cue">চাপুন</div>
+          <div class="k">১</div><div class="v">আখনাস ইবনে শারীক</div>
+          <div class="more"><p>মুফাসসিরদের বর্ণনায় আসে, ইনি রাসূলুল্লাহ ﷺ-এর অনুপস্থিতিতে তাঁর নামে কুৎসা রটাতেন এবং সামনে মিষ্টি কথা বলতেন। মুখ আর পিঠ — দুই রকম।</p></div>
+        </div>
+        <div class="card tap" tabindex="0">
+          <div class="cue">চাপুন</div>
+          <div class="k">২</div><div class="v">ওয়ালিদ ইবনে মুগীরা</div>
+          <div class="more"><p>মক্কার শীর্ষ ধনীদের একজন ও কুরাইশের বড় নেতা। সম্পদ ও সন্তানের সংখ্যা নিয়ে তার গর্ব কুরআনের একাধিক জায়গায় এসেছে। আয়াত ২ ও ৩-এর ছবির সঙ্গে তার চরিত্র হুবহু মেলে।</p></div>
+        </div>
+        <div class="card tap" tabindex="0">
+          <div class="cue">চাপুন</div>
+          <div class="k">৩</div><div class="v">উমাইয়া ইবনে খালাফ</div>
+          <div class="more"><p>বর্ণনা অনুযায়ী, রাসূল ﷺ-কে দেখলেই ইনি কটাক্ষ করতেন। ইনিই সেই ব্যক্তি, যে বিলাল (রা.)-কে মরুভূমির উত্তপ্ত বালিতে ফেলে নির্যাতন করত। মজার বিষয় — যে আগুনের কষ্ট দিয়ে সে অন্যকে শাস্তি দিত, সূরাটি তাকেই আগুনের কথা শোনায়।</p></div>
+        </div>
+        <div class="card tap" tabindex="0">
+          <div class="cue">চাপুন</div>
+          <div class="k">৪</div><div class="v">আস ইবনে ওয়াইল · জামীল ইবনে আমির</div>
+          <div class="more"><p>কিছু বর্ণনায় এই নামগুলোও এসেছে। সবগুলো বর্ণনার সাধারণ বৈশিষ্ট্য একটাই — প্রত্যেকেই ধনী, প্রত্যেকেই জিহ্বা দিয়ে অন্যকে ছোট করত।</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · উসূলের নীতি -->
+  <section class="slide" data-sec="প্রেক্ষাপট" data-title="জরুরি নীতি">
+    <div class="wrap">
+      <div class="eyebrow">একটি জরুরি নীতি</div>
+      <h2>নাম নির্দিষ্ট, কিন্তু হুকুম সবার জন্য</h2>
+      <div class="ar" style="font-size:clamp(24px,3.6vw,42px);text-align:center;margin:26px 0 10px;color:var(--gold-lit)">
+        العِبْرَةُ بِعُمُومِ اللَّفْظِ لَا بِخُصُوصِ السَّبَبِ
+      </div>
+      <p style="text-align:center;margin-inline:auto">“বিধান নির্ধারিত হয় শব্দের ব্যাপকতা দিয়ে, অবতরণের নির্দিষ্ট ঘটনা দিয়ে নয়।”</p>
+      <div class="grid g2" style="margin-top:30px">
+        <div class="card">
+          <div class="k">যা মনে রাখতে হবে</div>
+          <p>এই সূরার শানে নুযূল নিয়ে বর্ণনাগুলোর সনদ নিয়ে মুহাদ্দিসদের মধ্যে মতভেদ রয়েছে। তাই কোনো একটি নামকে চূড়ান্ত করে বলা ঠিক নয় — “অমুকের ব্যাপারেই নাযিল হয়েছে” বলাটা সতর্কতার পরিপন্থী।</p>
+        </div>
+        <div class="card" style="border-color:var(--gold)">
+          <div class="k">যা নিশ্চিত</div>
+          <p>ইবনে কাসীর (রহ.) সহ মুফাসসিরগণ স্পষ্ট করেছেন — আয়াত যদি নির্দিষ্ট কারও ব্যাপারে নাযিলও হয়ে থাকে, বিধানটি ব্যাপক। আল্লাহ বলেননি “ওয়াইল লি-উমাইয়া”, বলেছেন <span class="ar">وَيْلٌ لِّكُلِّ</span> — <strong>“প্রত্যেকের জন্য”</strong>।</p>
+        </div>
+      </div>
+      <p style="margin-top:24px;text-align:center;color:var(--gold-lit);font-style:italic">তাই এই সূরা ইতিহাসের কোনো মৃত মানুষের বিরুদ্ধে অভিযোগপত্র নয় — এটি আজকের আমার-আপনার জন্য আয়না।</p>
+    </div>
+  </section>
+
+  <!-- 7 · ধারাবাহিকতা -->
+  <section class="slide" data-sec="প্রেক্ষাপট" data-title="সূরার ধারাবাহিকতা">
+    <div class="wrap">
+      <div class="eyebrow">সূরার ধারাবাহিকতা</div>
+      <h2>পাশাপাশি তিনটি সূরা, একটিই গল্প</h2>
+      <div class="grid g3" style="margin-top:24px">
+        <div class="card">
+          <div class="k">১০২</div>
+          <div class="v ar" style="font-size:30px">التَّكَاثُر</div>
+          <p style="margin-top:10px">রোগ নির্ণয় — বেশি পাওয়ার প্রতিযোগিতা মানুষকে অন্ধ করে রাখে, কবর পর্যন্ত।</p>
+        </div>
+        <div class="card">
+          <div class="k">১০৩</div>
+          <div class="v ar" style="font-size:30px">العَصْر</div>
+          <p style="margin-top:10px">পথ্য — ঈমান, নেক আমল, সত্যের উপদেশ ও ধৈর্যের উপদেশ। ক্ষতি থেকে বাঁচার একমাত্র রাস্তা।</p>
+        </div>
+        <div class="card" style="border-color:var(--gold)">
+          <div class="k">১০৪</div>
+          <div class="v ar" style="font-size:30px">الهُمَزَة</div>
+          <p style="margin-top:10px">পরিণতি — যে পথ্য নিল না, তার শেষটা কেমন। এই সূরা আগের দুটির উপসংহার।</p>
+        </div>
+      </div>
+      <p style="margin-top:26px">তাকাসুর বলেছিল <em>সম্পদের প্রতিযোগিতা</em> মানুষকে ভুলিয়ে রাখে। হুমাযাহ দেখাচ্ছে সেই ভুলে-থাকা মানুষটি শেষ পর্যন্ত কী করে — <strong>সে জমা করে, গোনে, আর নিজেকে বড় ভেবে অন্যকে ছোট করে।</strong></p>
+    </div>
+  </section>
+
+  <!-- 8 · সম্পূর্ণ সূরা -->
+  <section class="slide" data-sec="তিলাওয়াত" data-title="সম্পূর্ণ সূরা">
+    <div class="wrap">
+      <div class="eyebrow">সম্পূর্ণ সূরা · অনুবাদসহ</div>
+      <div class="ar" style="text-align:center;font-size:clamp(20px,2.4vw,28px);color:var(--gold-lit);margin-bottom:14px">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <div id="verses"></div>
+      <p class="dim" style="font-size:15px;margin-top:14px;text-align:center">যেকোনো আয়াতে চাপ দিলে বাংলা অনুবাদ খুলবে</p>
+    </div>
+  </section>
+
+  <div id="mount"></div>
+
+  <!-- STRUCTURE -->
+  <section class="slide" data-sec="সৌন্দর্য" data-title="সূরার গঠন" data-phase="ember">
+    <div class="wrap">
+      <div class="eyebrow">সূরার গঠন</div>
+      <h2>নয়টি আয়াত, নিখুঁত এক আয়না</h2>
+      <p>সূরাটি দুই ভাগে ভাগ — আর প্রতিটি অপরাধের বিপরীতে ঠিক মানানসই একটি শাস্তি বসানো হয়েছে।</p>
+      <div class="grid g2" style="margin-top:22px">
+        <div class="card">
+          <div class="k">সে করেছিল</div>
+          <div class="v ar" style="font-size:28px">هُمَزَة</div>
+          <p style="margin-top:8px">মানুষের সম্মান <strong>ভাঙত</strong></p>
+        </div>
+        <div class="card" style="border-color:var(--ember)">
+          <div class="k">তাকে দেওয়া হলো</div>
+          <div class="v ar" style="font-size:28px">الحُطَمَة</div>
+          <p style="margin-top:8px">যে আগুন তাকে <strong>ভেঙে</strong> গুঁড়িয়ে দেয়</p>
+        </div>
+        <div class="card">
+          <div class="k">সে করেছিল</div>
+          <div class="v ar" style="font-size:28px">جَمَعَ · عَدَّدَهُ</div>
+          <p style="margin-top:8px">সম্পদ <strong>স্তূপ</strong> করত, বারবার গুনত</p>
+        </div>
+        <div class="card" style="border-color:var(--ember)">
+          <div class="k">তাকে দেওয়া হলো</div>
+          <div class="v ar" style="font-size:28px">عَمَدٍ مُّمَدَّدَة</div>
+          <p style="margin-top:8px">লম্বা <strong>স্তম্ভ</strong> স্তূপ হয়ে তার উপর</p>
+        </div>
+        <div class="card">
+          <div class="k">সে ভেবেছিল</div>
+          <div class="v ar" style="font-size:28px">أَخْلَدَهُ</div>
+          <p style="margin-top:8px">সম্পদ তাকে <strong>চিরস্থায়ী</strong> করবে</p>
+        </div>
+        <div class="card" style="border-color:var(--ember)">
+          <div class="k">সে পেল</div>
+          <div class="v ar" style="font-size:28px">المُوقَدَة</div>
+          <p style="margin-top:8px">যে আগুন <strong>নেভে না</strong> — চিরস্থায়ীত্ব, তবে অন্যভাবে</p>
+        </div>
+      </div>
+      <p style="margin-top:26px;text-align:center;color:var(--ember-lit);font-style:italic">সে যা চেয়েছিল, তাই তাকে দেওয়া হলো — শুধু উল্টো দিক থেকে।</p>
+    </div>
+  </section>
+
+  <!-- LESSONS -->
+  <section class="slide" data-sec="শিক্ষা" data-title="আমাদের জন্য শিক্ষা">
+    <div class="wrap">
+      <div class="eyebrow">আমাদের জন্য শিক্ষা</div>
+      <h2>নয়টি আয়াত আমাদের কী শেখায়</h2>
+      <div class="grid g2">
+        <div class="card"><div class="k">এক</div><div class="v">জিহ্বার গুনাহ ছোট গুনাহ নয়</div>
+          <p style="margin-top:9px" class="dim">যে অপরাধের জন্য পুরো একটি সূরা নাযিল হয় এবং <span class="ar">وَيْل</span> শব্দ দিয়ে শুরু হয়, সেটিকে “একটু মজা করেছি” বলে হালকা করা যায় না।</p></div>
+        <div class="card"><div class="k">দুই</div><div class="v">সম্পদ মর্যাদার প্রমাণ নয়</div>
+          <p style="margin-top:9px" class="dim">সম্পদ একটি আমানত ও পরীক্ষা। আল্লাহ কাউকে বেশি দিয়েছেন মানে তিনি তাকে বেশি ভালোবাসেন — এই সমীকরণ কুরআন ভেঙে দেয়।</p></div>
+        <div class="card"><div class="k">তিন</div><div class="v">জিহ্বা অন্তরের মুখপাত্র</div>
+          <p style="margin-top:9px" class="dim">আয়াত ৭ আগুনকে হৃদয় পর্যন্ত পাঠায়, কারণ অসুখটা সেখানেই। মুখ পাহারা দেওয়ার আগে অন্তর পরিষ্কার করতে হয়।</p></div>
+        <div class="card"><div class="k">চার</div><div class="v">কুরআনের সরাসরি নিষেধ</div>
+          <div class="ar" style="font-size:22px;margin-top:10px;color:var(--gold-lit)">لَا يَسْخَرْ قَوْمٌ مِّن قَوْمٍ</div>
+          <p style="margin-top:6px" class="dim">“কোনো সম্প্রদায় যেন অন্য সম্প্রদায়কে বিদ্রূপ না করে।” — সূরা হুজুরাত, ৪৯:১১</p></div>
+        <div class="card" style="grid-column:1/-1"><div class="k">পাঁচ</div><div class="v">রাসূল ﷺ-এর সংজ্ঞা</div>
+          <div class="ar" style="font-size:23px;margin-top:10px;color:var(--gold-lit)">الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ</div>
+          <p style="margin-top:6px" class="dim">“প্রকৃত মুসলিম সেই, যার জিহ্বা ও হাত থেকে অন্য মুসলিমরা নিরাপদ থাকে।” — বুখারী ও মুসলিম। খেয়াল করুন, জিহ্বার কথা হাতের আগে এসেছে।</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODERN -->
+  <section class="slide" data-sec="শিক্ষা" data-title="আজকের যুগে">
+    <div class="wrap">
+      <div class="eyebrow">আজকের যুগে</div>
+      <h2>হুমাযাহ মরে যায়নি — সে শুধু নতুন যন্ত্র পেয়েছে</h2>
+      <p class="lead">মক্কার হুমাযাহর ছিল একটি জিহ্বা আর একটি মজলিস। আজকের হুমাযাহর আছে একটি স্ক্রিন আর হাজারো দর্শক।</p>
+      <div class="grid g3" style="margin-top:24px">
+        <div class="card"><div class="v">স্ক্রিনশট</div><p style="margin-top:8px" class="dim">কারও ব্যক্তিগত কথা তুলে গ্রুপে ছড়িয়ে দেওয়া।</p></div>
+        <div class="card"><div class="v">মিম</div><p style="margin-top:8px" class="dim">কারও চেহারা, ওজন বা উচ্চারণ নিয়ে বানানো “নিরীহ” রসিকতা।</p></div>
+        <div class="card"><div class="v">কমেন্ট</div><p style="margin-top:8px" class="dim">যে মানুষটিকে চিনিই না, তার সম্পর্কে দুই লাইনের রায়।</p></div>
+        <div class="card"><div class="v">নাম বিকৃতি</div><p style="margin-top:8px" class="dim">গায়ের রং, গ্রাম বা পেশা ধরে ডাকনাম বানানো।</p></div>
+        <div class="card"><div class="v">সাবটুইট</div><p style="margin-top:8px" class="dim">নাম না নিয়ে খোঁচা — যাকে বলা, সে ঠিকই বোঝে।</p></div>
+        <div class="card"><div class="v">লাইফস্টাইল পোস্ট</div><p style="margin-top:8px" class="dim">“জামা‘আ মালান ওয়া ‘আদ্দাদাহ” — জমাও, তারপর সবাইকে গুনে গুনে দেখাও।</p></div>
+      </div>
+      <p style="margin-top:26px"><strong>একটি কঠিন প্রশ্ন:</strong> মক্কার লোকটি একটি মজলিসের সামনে কাউকে ছোট করত। আমরা যখন একটি পোস্ট শেয়ার করি, তখন কতজনের সামনে করি — আর সেটি ইন্টারনেটে কত বছর থেকে যায়?</p>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section class="slide" data-sec="আত্মসমীক্ষা" data-title="আত্মসমীক্ষা">
+    <div class="wrap">
+      <div class="eyebrow">আত্মসমীক্ষা · গত সাত দিন</div>
+      <h2>নিজের সঙ্গে সৎ হওয়ার সময়</h2>
+      <p class="dim" style="font-size:16px">যেগুলো আপনার ক্ষেত্রে সত্য, সেগুলোতে চাপ দিন। উত্তর কেউ দেখছে না।</p>
+      <div class="checks" id="checks"></div>
+      <div class="tally" id="tally"></div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="slide cover" data-sec="সমাপ্তি" data-title="শেষ কথা">
+    <div class="wrap">
+      <div class="eyebrow" style="justify-content:center">শেষ কথা</div>
+      <div class="ar" style="font-size:clamp(22px,3.4vw,38px);line-height:2.1;color:var(--gold-lit);text-align:center;max-width:22ch;margin-inline:auto">
+        اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ سَمْعِي، وَمِنْ شَرِّ بَصَرِي، وَمِنْ شَرِّ لِسَانِي، وَمِنْ شَرِّ قَلْبِي
+      </div>
+      <div class="hr"></div>
+      <p style="text-align:center;margin-inline:auto;max-width:52ch">“হে আল্লাহ, আমি আপনার আশ্রয় চাই আমার কানের অনিষ্ট থেকে, চোখের অনিষ্ট থেকে, জিহ্বার অনিষ্ট থেকে এবং অন্তরের অনিষ্ট থেকে।”</p>
+      <p class="dim" style="text-align:center;font-size:15px;margin-top:10px">— তিরমিযী ও আবু দাউদ</p>
+      <div class="tag" style="margin-top:36px">সূরাটি ভয় দেখানোর জন্য নয় —<br>দরজা বন্ধ হওয়ার আগে সরে আসার সুযোগ দেওয়ার জন্য।</div>
+      <div class="sub" style="margin-top:34px">জাযাকুমুল্লাহু খাইরান</div>
+    </div>
+  </section>
+
+</main>
+
+<div id="nav">
+  <button class="btn" id="prev">← আগে</button>
+  <div id="dots"></div>
+  <button class="btn" id="ovBtn" title="সব স্লাইড (O)">সূচি</button>
+  <button class="btn" id="fsBtn" title="ফুলস্ক্রিন (F)">⛶</button>
+  <button class="btn" id="next">পরে →</button>
+</div>
+
+<div id="ov">
+  <h3>সব স্লাইড</h3>
+  <div id="ovg"></div>
+  <p class="dim" style="margin-top:22px;font-size:15px">কীবোর্ড: ← → স্লাইড · O সূচি · F ফুলস্ক্রিন · Esc বন্ধ</p>
+</div>
+
+<script>
+(function(){
+"use strict";
+const bn = n => String(n).replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[d]);
+const pad = n => bn(String(n).padStart(2,"0"));
+
+/* ---------------- surah text ---------------- */
+const SURAH = [
+ ["وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ","দুর্ভোগ প্রত্যেক এমন ব্যক্তির জন্য, যে পেছনে নিন্দা করে ও সামনে কটাক্ষ করে।"],
+ ["الَّذِي جَمَعَ مَالًا وَعَدَّدَهُ","যে সম্পদ জমা করে আর তা বারবার গুনে রাখে।"],
+ ["يَحْسَبُ أَنَّ مَالَهُ أَخْلَدَهُ","সে মনে করে, তার সম্পদ তাকে চিরকাল বাঁচিয়ে রাখবে।"],
+ ["كَلَّا ۖ لَيُنبَذَنَّ فِي الْحُطَمَةِ","কখনোই নয়! তাকে অবশ্যই নিক্ষেপ করা হবে হুতামায়।"],
+ ["وَمَا أَدْرَاكَ مَا الْحُطَمَةُ","আর তুমি কি জানো, হুতামা কী?"],
+ ["نَارُ اللَّهِ الْمُوقَدَةُ","তা আল্লাহর প্রজ্বলিত আগুন।"],
+ ["الَّتِي تَطَّلِعُ عَلَى الْأَفْئِدَةِ","যা হৃদয় পর্যন্ত গিয়ে পৌঁছে যায়।"],
+ ["إِنَّهَا عَلَيْهِم مُّؤْصَدَةٌ","নিশ্চয়ই তা তাদের উপর বন্ধ করে দেওয়া হবে,"],
+ ["فِي عَمَدٍ مُّمَدَّدَةٍ","দীর্ঘ দীর্ঘ স্তম্ভে।"]
+];
+
+/* ---------------- tafsir data ---------------- */
+const AYAT = [
+{n:1,phase:"gold",sec:"তাফসীর · অপরাধ",title:"আয়াত ১ — জিহ্বার অপরাধ",
+ words:[
+  ["وَيْل","ওয়াইল","ধ্বংস, চরম দুর্ভোগ। কুরআনের সবচেয়ে কঠিন সতর্কবার্তাগুলোর একটি। কিছু বর্ণনায় এসেছে, এটি জাহান্নামের একটি উপত্যকার নাম। লক্ষ করুন — সূরাটি অভিশাপ দিয়ে শুরু হয়, উপদেশ দিয়ে নয়। বিষয়টি এতই গুরুতর।"],
+  ["لِكُلِّ","লিকুল্লি","“প্রত্যেকের জন্য।” এখানে কোনো ব্যতিক্রম রাখা হয়নি — ধনী-গরিব, নেতা-সাধারণ, আরব-অনারব, এমনকি ঈমানদার-বেঈমান কেউ বাদ যায়নি। শব্দটি একটিই, কিন্তু এটিই সূরাটিকে সব যুগের জন্য খুলে দেয়।"],
+  ["هُمَزَة","হুমাযাহ","যে ইঙ্গিতে অপমান করে — চোখ টিপে, ভ্রু নাচিয়ে, হাত দিয়ে নকল করে, মুখ বাঁকিয়ে। একটি শব্দও উচ্চারণ না করে মানুষকে ছোট করার শিল্প।"],
+  ["لُمَزَة","লুমাযাহ","যে জিহ্বা দিয়ে খোঁচা দেয় — নাম বিকৃত করে, দোষ খুঁজে বেড়ায়, খোঁটা দেয়। ইবনে আব্বাস (রা.)-এর একটি বর্ণনায়: হুমাযাহ সামনে দোষ ধরে, লুমাযাহ পেছনে গীবত করে।"]
+ ],
+ point:"মুফাসসিরগণ এই দুই শব্দের ব্যাখ্যায় ভিন্ন মত দিয়েছেন — কেউ বলেছেন ইশারা বনাম জিহ্বা, কেউ বলেছেন সামনে বনাম পেছনে। কিন্তু এই মতভেদটাই সুন্দর: সব ব্যাখ্যা একসাথে মিলিয়ে দেখলে মানুষকে ছোট করার <em>প্রতিটি</em> পথই এই আয়াতের নিচে ঢাকা পড়ে যায় — চোখের এক ঝলক ইশারা থেকে শুরু করে মুখের সরাসরি খোঁটা পর্যন্ত।"},
+
+{n:2,phase:"gold",sec:"তাফসীর · অপরাধ",title:"আয়াত ২ — অপরাধের শিকড়",special:"counter",
+ words:[
+  ["جَمَعَ","জামা‘আ","জমা করল, স্তূপ করল। শব্দটিতে কোনো ব্যয়ের ইঙ্গিত নেই — শুধু জমা। টাকা ঢুকছে, বেরোচ্ছে না।"],
+  ["مَالًا","মালান","“সম্পদ” — অনির্দিষ্টভাবে বলা হয়েছে। কীসের সম্পদ, হালাল না হারাম, কোথা থেকে এল — এসব প্রশ্ন সে করেনি। তার কাছে সম্পদ মানে শুধুই সংখ্যা।"],
+  ["عَدَّدَهُ","‘আদ্দাদাহু","শুধু গুনল না — বারবার গুনল। শব্দটিতে তাশদীদ (দ্বিত্ব) আছে, যা আরবিতে বারবার করা বোঝায়। আরেক ব্যাখ্যায়: সে সম্পদকে ভবিষ্যতের জন্য প্রস্তুতি বানিয়ে নিল, আল্লাহর উপর ভরসার বদলে।"]
+ ],
+ point:"এই আয়াতটিই সূরার আসল চাবি। প্রশ্ন হলো — সে মানুষকে ছোট করে <em>কেন</em>? উত্তর: কারণ সম্পদ তাকে একটা মিথ্যা উচ্চতা দিয়েছে। উপরে না উঠে বড় দেখানোর সবচেয়ে সহজ উপায় হলো অন্যকে নিচে নামানো। জিহ্বার রোগটা আসলে অন্তরের রোগের উপসর্গ মাত্র।"},
+
+{n:3,phase:"gold",sec:"তাফসীর · অপরাধ",title:"আয়াত ৩ — অমরত্বের বিভ্রম",
+ words:[
+  ["يَحْسَبُ","ইয়াহসাবু","“সে মনে করে” — জানে না, ধারণা করে। আল্লাহ ইচ্ছা করেই এমন একটি শব্দ বাছলেন যা নিশ্চয়তা নয়, বিভ্রম বোঝায়। কারণ কথাটি সত্যই নয়।"],
+  ["أَخْلَدَهُ","আখলাদাহু","তাকে চিরস্থায়ী করে দিয়েছে। মূল শব্দ খুলদ — অনন্তকাল, যেটি জান্নাত-জাহান্নামের জন্য ব্যবহৃত হয়।"]
+ ],
+ point:"এখানে সবচেয়ে সূক্ষ্ম বিষয়টি হলো <strong>কাল</strong>। আল্লাহ বলেননি “করে দেবে” — বলেছেন <em>“করে দিয়েছে”</em>, অতীতকালে। যেন কাজটা শেষ, প্রশ্নটা মীমাংসিত। এই লোকটি কখনো মুখে বলে না “আমি অমর”। কেউই বলে না। কিন্তু সে বাঁচে ঠিক এমনভাবে, যেন মৃত্যু বলে কিছু নেই — বছরের পর বছরের পরিকল্পনা, কিন্তু কবরের জন্য এক দিনেরও নয়।"},
+
+{n:4,phase:"ember",sec:"তাফসীর · পরিণতি",title:"আয়াত ৪ — আবর্জনার মতো",
+ words:[
+  ["كَلَّا","কাল্লা","“কখনোই নয়!” — এক শব্দে তার সারা জীবনের হিসাব বাতিল। কুরআনে এই শব্দটি আসে ভুল ধারণাকে সজোরে থামিয়ে দিতে।"],
+  ["لَيُنبَذَنَّ","লা-ইউনবাযান্না","নাবাযা মানে অপ্রয়োজনীয় জিনিস ছুঁড়ে ফেলা — খেজুরের বিচি, উচ্ছিষ্ট, আবর্জনা। আর শব্দটির শুরুতে “লাম” ও শেষে “নূনে তাকীদ” — অর্থাৎ “অবশ্যই, নিশ্চিতভাবে”। কোনো সম্ভাবনা নয়, ঘোষণা।"],
+  ["الحُطَمَة","আল-হুতামাহ","মূল শব্দ হাতম — ভেঙে চুরমার করা, গুঁড়িয়ে দেওয়া। যা-ই ভেতরে যায়, সে তাকেই ভেঙে ফেলে।"]
+ ],
+ point:"এখানে দুটি চরম বিদ্রূপ একসাথে। <strong>এক:</strong> যে নিজেকে ভাবত সবচেয়ে দামি, তাকে ছুঁড়ে ফেলা হবে ঠিক আবর্জনার মতো — যত্ন করে নয়, ছুড়ে। <strong>দুই:</strong> সে ছিল হুমাযাহ (যে ভাঙে), তাকে গ্রাস করবে হুতামাহ (যে ভাঙে)। শব্দ দুটির অর্থই এক। সে যা করত, তাই তার সঙ্গে করা হবে।"},
+
+{n:5,phase:"ember",sec:"তাফসীর · পরিণতি",title:"আয়াত ৫ — কল্পনার সীমা",
+ words:[
+  ["وَمَا أَدْرَاكَ","ওয়ামা আদরাকা","“তুমি কী জানো?” — প্রশ্নটি উত্তর চায় না। এটি আরবি অলংকারের একটি কৌশল, যা বোঝায়: বিষয়টি তোমার অভিজ্ঞতার বাইরে, নিজের মন থেকে কল্পনা কোরো না।"]
+ ],
+ point:"কুরআনের একটি চমৎকার নিয়ম এখানে কাজ করছে। যেখানে <span class='ar'>مَا أَدْرَاكَ</span> (“তুমি কী জানো”) এসেছে, সেখানে পরের আয়াতেই ব্যাখ্যা এসেছে। আর যেখানে <span class='ar'>مَا يُدْرِيكَ</span> (“তোমাকে কী জানাবে”) এসেছে, সেখানে বিষয়টি গোপনই রাখা হয়েছে — যেমন কিয়ামতের সময়। এখানে ব্যাখ্যা আসছে, কারণ আল্লাহ চান আমরা <em>জেনে</em> সাবধান হই। এটি লুকানোর জায়গা নয়, সতর্ক করার জায়গা।"},
+
+{n:6,phase:"ember",sec:"তাফসীর · পরিণতি",title:"আয়াত ৬ — আল্লাহর আগুন",
+ words:[
+  ["نَارُ اللَّهِ","নারুল্লাহ","“আল্লাহর আগুন।” আরবিতে কোনো জিনিসকে আল্লাহর দিকে সম্বোধন করা হয় তার মহত্ত্ব ও ভয়াবহতা বোঝাতে — যেমন “নাকাতুল্লাহ” (আল্লাহর উটনী)। আগুনটি এত ভয়ংকর যে এর পরিচয়ই দেওয়া হলো স্রষ্টার নামে।"],
+  ["المُوقَدَة","আল-মূকাদাহ","“যা জ্বালিয়ে রাখা হয়েছে।” ব্যাকরণে এটি কর্মবাচ্য — অর্থাৎ কেউ ইচ্ছা করে, ক্রমাগত এটি জ্বালিয়ে রাখছেন। নিজে থেকে নেভার প্রশ্নই আসে না।"]
+ ],
+ point:"দুনিয়ার আগুন মানুষ জ্বালায়, মানুষ নেভায়, আর কাঠ ফুরালে নিজেই নিভে যায়। এই আগুন আল্লাহ জ্বালিয়ে রেখেছেন — তাই এর জ্বালানি ফুরায় না, তাপ কমে না, আর এর তীব্রতা মাপার কোনো একক দুনিয়ায় নেই।"},
+
+{n:7,phase:"ember",sec:"তাফসীর · পরিণতি",title:"আয়াত ৭ — হৃদয় পর্যন্ত",special:"heart",
+ words:[
+  ["تَطَّلِعُ","তাত্তালি‘উ","উঠে যায়, উপরে চড়ে বসে, ভেদ করে ভেতরে ঢুকে পড়ে। আগুন শুধু ছোঁয় না — সে আরোহণ করে, খুঁজে খুঁজে গভীরে যায়।"],
+  ["الأَفْئِدَة","আল-আফইদাহ","“ফুআদ”-এর বহুবচন। আরবিতে “ক্বলব” বলা হয় সাধারণভাবে হৃদয়কে, আর “ফুআদ” বলা হয় হৃদয়ের সেই ভেতরের জায়গাটিকে, যেখানে অনুভূতি জন্ম নেয়, যেখানে নিয়ত তৈরি হয়।"]
+ ],
+ point:"এটাই সূরার সবচেয়ে গভীর আয়াত। প্রশ্ন করুন — আগুন হৃদয় পর্যন্ত <em>কেন</em> যায়? কারণ অপরাধটির জন্ম হয়েছিল ঠিক সেখানেই। অহংকার, ঘৃণা, সম্পদের মোহ, অন্যকে তুচ্ছ ভাবার প্রবণতা — সব অন্তরে। জিহ্বা তো শুধু উচ্চারণ করেছে যা অন্তরে আগে থেকেই ছিল। তাই শাস্তি গিয়ে থামে ঠিক সেই জায়গায়, যেখান থেকে অপরাধটির সূচনা।<br><br>আর একটি ভয়ংকর বাস্তবতা — দুনিয়ার আগুন চামড়া পোড়ায়, হৃদয়ে পৌঁছানোর আগেই মানুষ মারা যায়, কষ্ট শেষ হয়। এই আগুন হৃদয় পর্যন্ত পৌঁছায়, <strong>অথচ মৃত্যু আসে না।</strong>"},
+
+{n:8,phase:"ember",sec:"তাফসীর · পরিণতি",title:"আয়াত ৮ — দরজা বন্ধ",
+ words:[
+  ["مُّؤْصَدَة","মু’সাদাহ","শক্ত করে বন্ধ করে দেওয়া, এঁটে দেওয়া। শব্দটি আরবিতে ব্যবহৃত হয় দরজা ভালোভাবে আটকে দেওয়ার অর্থে — যেন কোনো ফাঁক না থাকে।"],
+  ["عَلَيْهِم","আলাইহিম","“তাদের উপর।” এখানে বহুবচন এসেছে, যদিও শুরু হয়েছিল একজনকে দিয়ে। কারণ এই চরিত্রের মানুষ একজন নয় — প্রতি যুগে অনেক।"]
+ ],
+ point:"এখানেও নিখুঁত মিল। দুনিয়ায় সে <strong>দরজা বন্ধ রেখেছিল</strong> — গরিবের জন্য, প্রয়োজনগ্রস্তের জন্য, ভিন্ন মতের মানুষের জন্য। তার হাত ছিল বন্ধ, তার অন্তর ছিল বন্ধ। আখিরাতে দরজা বন্ধ হলো তার উপরেই। বের হওয়ার পথ নেই, বাতাস নেই, আর সবচেয়ে কঠিন — আশা নেই।"},
+
+{n:9,phase:"ember",sec:"তাফসীর · পরিণতি",title:"আয়াত ৯ — দীর্ঘ স্তম্ভে",special:"pillars",
+ words:[
+  ["عَمَد","আমাদ","স্তম্ভ, খুঁটি, লম্বা থাম।"],
+  ["مُّمَدَّدَة","মুমাদ্দাদাহ","টেনে লম্বা করা, দীর্ঘায়িত। মূল শব্দ “মাদ্দ” — যা প্রসারিত করা বোঝায়।"]
+ ],
+ point:"মুফাসসিরগণ দুটি ব্যাখ্যা দিয়েছেন। <strong>এক:</strong> লম্বা স্তম্ভ দিয়ে দরজাগুলো চেপে ধরে বন্ধ করে দেওয়া হবে — যেন খোলার কোনো সম্ভাবনাই না থাকে। <strong>দুই:</strong> তাদেরকেই সেই স্তম্ভে বেঁধে রাখা হবে, নড়ার উপায় থাকবে না।<br><br>আর সূরাটি শেষ হয় ঠিক যেখান থেকে শুরু হয়েছিল, সেখানেই — সে দুনিয়ায় সম্পদ <em>স্তূপ</em> করে উঁচু হতে চেয়েছিল। আখিরাতে স্তূপ হলো স্তম্ভ, তবে তার উপরে।"}
+];
+
+/* ---------------- build surah list ---------------- */
+const vBox = document.getElementById("verses");
+SURAH.forEach(function(v,i){
+  const d = document.createElement("div");
+  d.className = "verse"; d.tabIndex = 0;
+  d.innerHTML = '<span class="n">'+bn(i+1)+'</span><span class="a">'+v[0]+'</span><span class="b">'+v[1]+'</span>';
+  d.addEventListener("click",()=>d.classList.toggle("open"));
+  d.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();d.classList.toggle("open")}});
+  vBox.appendChild(d);
+});
+
+/* ---------------- expandable cards (শানে নুযূল) ---------------- */
+document.querySelectorAll(".tap").forEach(function(card){
+  function toggle(){
+    const opening = !card.classList.contains("open");
+    card.classList.toggle("open", opening);
+    card.setAttribute("aria-expanded", opening ? "true" : "false");
+  }
+  card.setAttribute("role","button");
+  card.setAttribute("aria-expanded","false");
+  card.addEventListener("click", toggle);
+  card.addEventListener("keydown", function(e){
+    if(e.key === "Enter" || e.key === " "){ e.preventDefault(); toggle(); }
+  });
+});
+
+/* ---------------- build ayah slides ---------------- */
+const mount = document.getElementById("mount");
+
+function specialHTML(kind){
+  if(kind==="counter") return '<div class="coins" data-coins></div><div class="tick" data-tick><span>সে গুনছে</span>০</div>'+
+    '<div class="recount" data-recount>…গুনে শেষ, আবার শুরু</div>'+
+    '<div class="fineprint">সংখ্যাটি নিছক উদাহরণ — কোনো বর্ণনা থেকে নেওয়া নয়। আয়াতের বিষয় “কত”ও নয়; বিষয় হলো একই সম্পদ বারবার গোনার অভ্যাসটি।</div>';
+  if(kind==="pillars") return '<div class="pillars" data-pillars></div>';
+  if(kind==="heart") return '<div class="figure"><svg viewBox="0 0 300 190" aria-hidden="true">'+
+    '<g fill="none" stroke-width="2.5" opacity=".9">'+
+    '<path class="flame" d="M110 178 C80 150 92 122 108 104 C104 128 122 132 124 118 C132 134 128 158 110 178Z" fill="rgba(217,67,15,.30)" stroke="var(--ember)"/>'+
+    '<path class="flame" d="M150 182 C112 148 128 108 150 84 C144 118 170 124 172 106 C186 130 180 160 150 182Z" fill="rgba(217,67,15,.24)" stroke="var(--ember-lit)"/>'+
+    '<path class="flame" d="M190 178 C160 152 172 124 188 106 C184 130 202 134 204 120 C212 136 208 158 190 178Z" fill="rgba(217,67,15,.30)" stroke="var(--ember)"/>'+
+    '</g>'+
+    '<g transform="translate(150,60)"><path class="heartpath" stroke-width="2.5" style="transform-origin:center" '+
+    'd="M0 34 C-34 12 -40 -12 -26 -24 C-14 -34 -2 -26 0 -16 C2 -26 14 -34 26 -24 C40 -12 34 12 0 34Z"/></g>'+
+    '</svg></div>';
+  return "";
+}
+
+AYAT.forEach(function(a){
+  if(a.n===4){
+    const h = document.createElement("section");
+    h.className = "slide hinge"; h.dataset.sec = "মোড়"; h.dataset.title = "কাল্লা — মোড় ঘোরার মুহূর্ত"; h.dataset.phase = "ember";
+    h.innerHTML = '<div class="wrap">'+
+      '<div class="kalla">كَلَّا</div>'+
+      '<div class="say">কখনোই নয়।</div>'+
+      '<p class="note">তিনটি আয়াতে আল্লাহ লোকটির নিজের গড়া জগৎ দেখালেন — জিহ্বা, সম্পদ, আর অমরত্বের বিভ্রম। এরপর একটিমাত্র শব্দ। পুরো হিসাব বাতিল।</p>'+
+      '<div class="split">'+
+        '<span class="a">আয়াত ১–৩<b>তার অপরাধ</b></span>'+
+        '<span class="x">◆</span>'+
+        '<span class="b">আয়াত ৪–৯<b>তার পরিণতি</b></span>'+
+      '</div></div>';
+    mount.appendChild(h);
+  }
+  const s = document.createElement("section");
+  s.className = "slide"; s.dataset.sec = a.sec; s.dataset.title = a.title; s.dataset.phase = a.phase;
+  const chips = a.words.map((w,i)=>'<button class="chip" data-w="'+i+'">'+w[0]+'</button>').join("");
+  s.innerHTML = '<div class="wrap">'+
+    '<div class="ayah-head"><span class="ayah-num">'+bn(a.n)+'</span>'+
+      '<div style="flex:1;min-width:260px"><div class="ar ar-hero">'+SURAH[a.n-1][0]+'</div>'+
+      '<div class="trans">'+SURAH[a.n-1][1]+'</div></div></div>'+
+    (a.special?specialHTML(a.special):"")+
+    '<div class="chips">'+chips+'</div>'+
+    '<div class="gloss empty"><div class="gt">শব্দের গভীরে</div><p>উপরের যেকোনো আরবি শব্দে চাপ দিন</p></div>'+
+    '<div class="point"><div class="pl">মূল কথা</div><p>'+a.point+'</p></div>'+
+  '</div>';
+  const gloss = s.querySelector(".gloss");
+  s.querySelectorAll(".chip").forEach(function(c){
+    c.addEventListener("click",function(){
+      s.querySelectorAll(".chip").forEach(x=>x.classList.remove("sel"));
+      c.classList.add("sel");
+      const w = a.words[+c.dataset.w];
+      gloss.classList.remove("empty");
+      gloss.innerHTML = '<div class="gt">'+w[0]+' &nbsp;·&nbsp; '+w[1]+'</div><p>'+w[2]+'</p>';
+    });
+  });
+  mount.appendChild(s);
+});
+
+/* ---------------- checklist ---------------- */
+const QS = [
+ "গত সাত দিনে কারও অনুপস্থিতিতে তার দোষ নিয়ে কথা বলেছি।",
+ "কারও চেহারা, ওজন, উচ্চারণ বা পোশাক নিয়ে হেসেছি।",
+ "এমন কোনো মিম, স্ক্রিনশট বা ভিডিও শেয়ার করেছি, যাতে একজন মানুষ ছোট হয়েছে।",
+ "কাউকে এমন নামে ডেকেছি, যেটা সে পছন্দ করে না।",
+ "আমার আয়, ডিগ্রি বা জিনিসপত্র কারও চেয়ে ভালো — এই ভাবনাটা মনে এসেছে।",
+ "কারও সাহায্যের অনুরোধ শুনেও চুপ করে থেকেছি, যদিও সামর্থ্য ছিল।"
+];
+const cBox = document.getElementById("checks"), tally = document.getElementById("tally");
+QS.forEach(function(q){
+  const d = document.createElement("div");
+  d.className = "check"; d.tabIndex = 0;
+  d.innerHTML = '<span class="box"></span><span>'+q+'</span>';
+  function tog(){ d.classList.toggle("done"); score(); }
+  d.addEventListener("click",tog);
+  d.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();tog()}});
+  cBox.appendChild(d);
+});
+function score(){
+  const n = cBox.querySelectorAll(".check.done").length;
+  const msg = n===0 ? "একটিও নয়? আলহামদুলিল্লাহ — এখন কাজ হলো এটি ধরে রাখা।"
+    : n<=2 ? "চিহ্নিত: "+bn(n)+"টি। ছোট মনে হতে পারে — কিন্তু আয়াত ১ শুরুই হয়েছে চোখের এক ইশারা দিয়ে।"
+    : n<=4 ? "চিহ্নিত: "+bn(n)+"টি। সূরাটি ঠিক এখানেই আমাদের থামায়। আজ একজনের কাছে ক্ষমা চেয়ে শুরু করা যায়।"
+    : "চিহ্নিত: "+bn(n)+"টি। কঠিন সত্য। কিন্তু যে নিজের দোষ দেখতে পায়, তার দরজা এখনো খোলা — আর এই সূরা নাযিলই হয়েছে দরজা বন্ধ হওয়ার আগে।";
+  tally.textContent = msg;
+}
+score();
+
+/* ---------------- deck engine ---------------- */
+const slides = Array.from(document.querySelectorAll(".slide"));
+const dots = document.getElementById("dots");
+const bar = document.getElementById("bar");
+const railsec = document.getElementById("railsec");
+const counter = document.getElementById("count");
+const ovg = document.getElementById("ovg");
+let i = 0;
+
+slides.forEach(function(s,k){
+  const b = document.createElement("button");
+  b.className = "dot"; b.type = "button";
+  b.setAttribute("aria-label","স্লাইড "+bn(k+1));
+  b.addEventListener("click",()=>go(k));
+  dots.appendChild(b);
+
+  const c = document.createElement("button");
+  c.className = "ovc"; c.type = "button";
+  c.innerHTML = '<span class="i">'+pad(k+1)+'</span><span class="t">'+(s.dataset.title||"—")+'</span>';
+  c.addEventListener("click",function(){ go(k); ov.classList.remove("on"); });
+  ovg.appendChild(c);
+});
+
+/* ambient rules */
+const ground = document.getElementById("ground");
+const RULES = 26;
+for(let k=0;k<RULES;k++){
+  const r = document.createElement("div");
+  r.className = "rule";
+  r.style.left = (100/(RULES+1))*(k+1)+"%";
+  ground.appendChild(r);
+}
+const rules = Array.from(ground.children);
+
+function paint(idx){
+  const s = slides[idx];
+  const ember = s.dataset.phase === "ember";
+  document.body.classList.toggle("phase-ember", ember);
+  document.documentElement.style.setProperty("--accent", ember?"var(--ember)":"var(--gold)");
+  document.documentElement.style.setProperty("--accent-lit", ember?"var(--ember-lit)":"var(--gold-lit)");
+  document.documentElement.style.setProperty("--accent-dim", ember?"var(--ember-dim)":"var(--gold-dim)");
+  const t = idx/(slides.length-1);
+  rules.forEach(function(r,k){
+    const h = ember ? (.28 + ((k*37)%50)/100) : (.10 + t*.5 + ((k*23)%40)/160);
+    r.style.transform = "scaleY("+h.toFixed(3)+")";
+  });
+  ground.style.opacity = ember ? .72 : .45;
+}
+
+function animateSpecials(s){
+  const coins = s.querySelector("[data-coins]");
+  if(coins){
+    coins.innerHTML = "";
+    const N = 34;
+    for(let k=0;k<N;k++){
+      const c = document.createElement("div"); c.className="coin"; coins.appendChild(c);
+      setTimeout(()=>{ c.style.height = (16 + Math.round(Math.abs(Math.sin(k*.7))*86)) + "px"; }, 40+k*26);
+    }
+    const tick = s.querySelector("[data-tick]");
+    const recount = s.querySelector("[data-recount]");
+    const target = 1428600;
+    const token = String(Date.now()+Math.random());
+    coins.dataset.token = token;
+    let passes = 0;
+    recount.textContent = "…গুনে শেষ, আবার শুরু";
+    function alive(){ return coins.dataset.token === token && s.classList.contains("on"); }
+    function pass(){
+      if(!alive()) return;
+      const t0 = performance.now();
+      (function step(now){
+        if(!alive()) return;
+        const p = Math.min(1,(now-t0)/2200);
+        const v = Math.round(target*(1-Math.pow(1-p,3)));
+        tick.innerHTML = '<span>সে গুনছে</span>'+bn(v.toLocaleString("en-US"));
+        if(p<1){ requestAnimationFrame(step); }
+        else {
+          passes++;
+          recount.textContent = "…গুনে শেষ, আবার শুরু · এ পর্যন্ত "+bn(passes)+" বার";
+          setTimeout(pass, 900);
+        }
+      })(t0);
+    }
+    pass();
+  }
+  const pil = s.querySelector("[data-pillars]");
+  if(pil){
+    pil.innerHTML = "";
+    for(let k=0;k<15;k++){
+      const p = document.createElement("div"); p.className="pillar"; pil.appendChild(p);
+      setTimeout(()=>{ p.style.height = (60 + Math.round(Math.abs(Math.cos(k*.55))*70)) + "px"; }, 60+k*55);
+    }
+  }
+}
+
+function go(n){
+  i = Math.max(0, Math.min(slides.length-1, n));
+  slides.forEach((s,k)=>s.classList.toggle("on", k===i));
+  Array.from(dots.children).forEach((d,k)=>d.classList.toggle("on", k===i));
+  bar.style.width = ((i)/(slides.length-1)*100)+"%";
+  railsec.textContent = slides[i].dataset.sec || "";
+  counter.textContent = pad(i+1)+" / "+pad(slides.length);
+  slides[i].scrollTop = 0;
+  paint(i);
+  animateSpecials(slides[i]);
+}
+
+const ov = document.getElementById("ov");
+document.getElementById("next").addEventListener("click",()=>go(i+1));
+document.getElementById("prev").addEventListener("click",()=>go(i-1));
+document.getElementById("ovBtn").addEventListener("click",()=>ov.classList.toggle("on"));
+document.getElementById("fsBtn").addEventListener("click",function(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+  else document.exitFullscreen?.();
+});
+
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"){ ov.classList.remove("on"); return; }
+  const tag = (e.target.tagName||"").toLowerCase();
+  if(tag==="input"||tag==="textarea") return;
+  if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){ e.preventDefault(); go(i+1); }
+  else if(e.key==="ArrowLeft"||e.key==="PageUp"){ e.preventDefault(); go(i-1); }
+  else if(e.key==="Home"){ go(0); }
+  else if(e.key==="End"){ go(slides.length-1); }
+  else if(e.key==="o"||e.key==="O"){ ov.classList.toggle("on"); }
+  else if(e.key==="f"||e.key==="F"){ document.getElementById("fsBtn").click(); }
+});
+
+let sx=0, sy=0;
+document.addEventListener("touchstart",e=>{sx=e.changedTouches[0].clientX;sy=e.changedTouches[0].clientY},{passive:true});
+document.addEventListener("touchend",function(e){
+  const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+  if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.6) go(i + (dx<0?1:-1));
+},{passive:true});
+
+go(0);
+})();
+</script>
+</body>
+</html>
