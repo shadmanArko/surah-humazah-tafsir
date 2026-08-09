@@ -2,7 +2,7 @@
 
 An interactive Bangla presentation on the tafsir of Surah Al-Humazah (Qur'an 104).
 
-**Live:** https://USERNAME.github.io/REPO/
+**Live:** [https://USERNAME.github.io/REPO/](https://shadmanarko.github.io/surah-humazah-tafsir/)
 
 ## What's inside
 
